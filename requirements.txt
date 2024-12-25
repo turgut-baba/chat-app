@@ -1,0 +1,4 @@
+pytest
+asyncio
+fastapi
+websockets

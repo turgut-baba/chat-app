@@ -1,0 +1,95 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment
+.env/
+.venv/
+env/
+venv/
+ENV/
+
+# Installers
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Distribution / packaging
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Logs and debugging
+*.log
+*.out
+*.err
+
+# Unit test / coverage reports
+.coverage
+.tox/
+.nox/
+*.cover
+coverage.xml
+*.lcov
+.cache
+
+# Pytest
+.pytest_cache/
+
+# MyPy type-checking cache
+.mypy_cache/
+
+# PyCharm files
+.idea/
+*.iml
+
+# VS Code files
+.vscode/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Local configuration files
+*.env
+*.local
+config.json
+*.yaml
+*.yml
+
+# Database files
+*.sqlite3
+*.db
+
+# Docker files
+Dockerfile*
+.dockerignore
+
+# Docker Compose
+docker-compose.yml
+
+# Environment files for Docker
+.env.docker
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+desktop.ini
+
+# Compiled static files (e.g., for Django)
+staticfiles/
+
+# Application-specific logs or temp files
+*.log
+tmp/
+*.bak
+
+# Any other ignored files (optional)
+# Add custom patterns for your project here

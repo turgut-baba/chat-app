@@ -1,0 +1,26 @@
+As a C++ developer some habbits may have transfered over to my python coding skills :)
+
+I tried to be as modular and scalable as possible as I usually do.
+Some aspects, mainly naming, might be suboptimal as this is not a concrete 
+project. For example I would have named the folder 'src' something else like the
+projects name to better fit the overall integrity.
+
+First thing I did upon reading the assignment was to instictively create a github repo and
+add all the boiler plate python code in a vscode project. Stuff like gitignore, a basic docker file
+etc.
+
+You can follow the design steps from the github repo.
+
+After that I wanted to do some research that might be usefull for me. With a simple ChatGPT prompt
+I've discovered RabbitMQ and celery, both of which were open source so read those repositories.
+Of course it wasn't enough so I search the internet more on the topic. After that I was left With
+2 options: Integrate something similar to the aforementioned frameworks or create something unique
+with those foundations. I followed my own thing and did a little bit of both. Implementing what
+I thought is integral to a system like this and added my own creative features after a solid foundation.
+
+Next I've added what I thought would be essential classes. Ofcourse some things are subjected to change
+as there are no architectural designs for me to follow, so I just starting coding whatever and tweaking it 
+as I go. 
+
+P.S. I think it would have been clearer if there was an example "client code"
+for me to understand the usage of the library I'm build.
