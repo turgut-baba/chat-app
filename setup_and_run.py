@@ -15,6 +15,6 @@ if __name__ == "__main__":
     if option == "1":
         ...
     elif option == "2":
-        ...
+        sys.run("uvicorn InterviewMQ.Queue:app --host 0.0.0.0 --port 8000 --reload")
     else:
         print("Something went wrong.")

@@ -1,26 +1,37 @@
-As a C++ developer some habbits may have transfered over to my python coding skills :)
+As a C++ developer, some habits may have transferred over to my Python coding skills. :)
 
-I tried to be as modular and scalable as possible as I usually do.
-Some aspects, mainly naming, might be suboptimal as this is not a concrete 
-project. For example I would have named the folder 'src' something else like the
-projects name to better fit the overall integrity.
+On an important note, even though I've written in Python a lot throughout the years, 
+some aspects of the challenge were fairly new to me, as I'm mainly a C++ developer. 
+However, as a self-taught developer, my most cunning skill is learning new technologies 
+with ease thanks to my curiosity. I believe I did a great job with what I've searched.
 
-First thing I did upon reading the assignment was to instictively create a github repo and
-add all the boiler plate python code in a vscode project. Stuff like gitignore, a basic docker file
-etc.
+I tried to be as modular and scalable as possible, as I usually do. Some aspects,
+ mainly naming, might be suboptimal as this is not a concrete project.
 
-You can follow the design steps from the github repo.
+The first thing I did upon reading the assignment was to instinctively create a GitHub 
+repo and add all the boilerplate Python code in a VSCode project—stuff like .gitignore,
+ a basic Dockerfile, etc.
 
-After that I wanted to do some research that might be usefull for me. With a simple ChatGPT prompt
-I've discovered RabbitMQ and celery, both of which were open source so read those repositories.
-Of course it wasn't enough so I search the internet more on the topic. After that I was left With
-2 options: Integrate something similar to the aforementioned frameworks or create something unique
-with those foundations. I followed my own thing and did a little bit of both. Implementing what
-I thought is integral to a system like this and added my own creative features after a solid foundation.
+After that, I wanted to do some research that might be useful for me. With a simple ChatGPT
+ prompt, I discovered RabbitMQ and Celery, both of which were open-source, so I read those 
+ repositories. Of course, it wasn't enough, so I searched the internet more on the topic. 
+ 
+ After that, I was left with two options: integrate something similar to the aforementioned 
+ frameworks or create something unique with those foundations. I followed my own path and 
+ did a little bit of both, implementing what I thought was integral to a system like this 
+ and adding my own creative features after building a solid foundation.
 
-Next I've added what I thought would be essential classes. Ofcourse some things are subjected to change
-as there are no architectural designs for me to follow, so I just starting coding whatever and tweaking it 
-as I go. 
+Next, I added what I thought would be essential classes. Of course, some things are 
+subject to change as there are no architectural designs for me to follow, 
+so I just started coding whatever and tweaking it as I went.
 
-P.S. I think it would have been clearer if there was an example "client code"
-for me to understand the usage of the library I'm build.
+My next main objective is to implement the client microservices to better understand
+ what I'm going to do. I believe going step by step from such an example will amplify 
+ my vision on the task.
+
+So, after looking at some RabbitMQ examples and having a little chat with ChatGPT, 
+I created two examples, ServiceA and ServiceB (creative names, I know).
+Since I've developed some websites before, creating ServiceB, which receives messages 
+and processes them like a front-end would, was more comfortable within my skill range.
+So, I decided to add the websocket to that and focus more on it to aid my development 
+steps.

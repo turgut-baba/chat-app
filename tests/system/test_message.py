@@ -1,4 +1,4 @@
-from src.system.message import Message
+from InterviewMQ.system.message import Message
 
 def test_set_in_quee():
     mock_message = Message()
