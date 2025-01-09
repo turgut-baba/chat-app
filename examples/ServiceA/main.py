@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+""" from fastapi import FastAPI
 import pika
 import json
 
@@ -24,3 +24,14 @@ async def publish_message(task_id: int):
     )
     connection.close()
     return {"message": f"Task {task_id} published to queue"}
+ """
+
+import asyncio
+import websockets
+import json
+
+from InterviewLIB.src import ProducerImpl
+
+client = ProducerImpl("ws://localhost:8000/interviewmq")
+client.publish("foo", "Hello stryker team, this is my application!")
+

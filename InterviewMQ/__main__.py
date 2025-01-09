@@ -1,7 +1,11 @@
 import sys
-from InterviewMQ.Queue import *
+from InterviewMQ.system.websocket import router
+from fastapi import FastAPI
 
-from . import maybe_patch_concurrency
+app = FastAPI()
 
-if __name__ == '__main__': 
-    pass    
+app.include_router(router)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("InterviewMQ:app", host="0.0.0.0", port=8000, reload=True)

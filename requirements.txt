@@ -1,5 +1,9 @@
-pytest
 asyncio
 fastapi
 websockets
+
 uvicorn
+
+pytest
+pytest-asyncio 
+httpx
