@@ -1,12 +1,10 @@
-from fastapi import APIRouter, HTTPException, WebSocket
+from fastapi import Request, HTTPException, WebSocket
 from pydantic import BaseModel
 from InterviewMQ.util.logger import Logger
 import asyncio
-from InterviewMQ.Queue import connected_clients, topics
+from InterviewMQ.Queue import connected_clients, topics, router
 
 import json
-
-router = APIRouter()
 
 logger = Logger("server.log", "InterviewMQ")
 
@@ -14,9 +12,10 @@ logger = Logger("server.log", "InterviewMQ")
 @router.websocket("/interviewmq")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
+
     client_address = websocket.client
     logger.log(f"Client connected: {client_address}")
-    connected_clients.append(client_address)
+    #connected_clients.append(websocket)
     try:
         while True:
             try:
@@ -25,18 +24,21 @@ async def websocket_endpoint(websocket: WebSocket):
                 logger.log(f"Message received from {client_address}: {data}")
 
                 if message.get("command") == "subscribe":
-                    topics[message.get("topic")].append(websocket)
+                    await connected_clients.add_websocket_connection(message.get("topic"), websocket)
+
                 elif message.get("command") == "publish":
-                    all_subscribed = topics[message.get("topic")]
+                    await connected_clients.broadcast(message.get("topic"), message.get("msg"))
+
+                    """ all_subscribed = topics[message.get("topic")]
                     for reciever in all_subscribed:
                         msg = message.get("msg")
-                        await reciever.send_text(msg)
+                        await reciever.send_text(msg) """
                 
                 await websocket.send_text(f"Server response: Recieved message!")
             except asyncio.TimeoutError:
-                connected_clients.remove(client_address)
+                connected_clients.remove(message['topic'], websocket)
                 logger.log(f"Timeout, closing connection with {client_address}")
                 break
     except Exception as e:
-        connected_clients.clear()
+        #connected_clients.clear()
         logger.log(f"Connection closed: {e}") 

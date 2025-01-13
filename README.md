@@ -1,7 +1,7 @@
 # Getting Started with InterviewMQ and InterviewLIB
 
 Welcome to InterviewMQ/LIB, a Python library and server with two parts:
-An optional abstraction library caleld InterviewLIB that help write consumer and producer microservices and a message queue server called InterviewMQ. This guide will help you get started quickly and effectively.
+An optional abstraction library caleld InterviewLIB that helps you write consumer and producer microservices, and a message queue server called InterviewMQ. This guide will help you get started quickly and effectively.
 
 ---
 
@@ -16,7 +16,7 @@ An optional abstraction library caleld InterviewLIB that help write consumer and
 
 ## Installation
 
-To install InterviewMQ, you can directly use it's source code or use pip like so:
+To install InterviewLIB, you can directly use it's source code or use pip like so:
 
 ```bash
 pip install -e .

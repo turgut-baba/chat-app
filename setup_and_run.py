@@ -60,7 +60,7 @@ def linux_setup(option) -> dict:
 def windows_setup(option):
     machine = option["machine preferance"]
     if machine == 1:
-        ...
+        run_docker()
     elif machine == 2:
         sys.run("uvicorn InterviewMQ.Queue:app --host 0.0.0.0 --port 8000 --reload")
     else:
