@@ -10,9 +10,10 @@ async def subscribe(message: Message, request: Request):
     """
     Subscribe to the message queue using Server-Sent Events (SSE).
     """
+    topic = message.topic
 
     queue = asyncio.Queue()
-    await connected_clients.add_sse_connection(queue)
+    await connected_clients.add_sse_connection(topic, queue)
     
     async def event_stream():
         try:
@@ -22,7 +23,7 @@ async def subscribe(message: Message, request: Request):
         except asyncio.CancelledError:
             pass
         finally:
-            await connected_clients.remove_sse_connection(queue)
+            await connected_clients.remove_sse_connection(topic, queue)
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 

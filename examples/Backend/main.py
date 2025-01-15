@@ -6,8 +6,9 @@ from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
-client = Consumer("ws://localhost:8000/interviewmq")
+client = Consumer("http://localhost:8000/interviewmq/subscribe")
 client.set_filter("Hello")
+client.set_connection(ConnectionMethod.HTTP)
 asyncio.run(client.subscribe("foo") )
 
 

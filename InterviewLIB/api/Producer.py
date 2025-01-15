@@ -11,7 +11,7 @@ class Producer(Communicator):
         super().__init__(uri)
 
     async def publish(self, topic, message):
-        await self.run(topic, message)
+        return await self.run(topic, message)
 
     async def run_ws(self, topic, message):
         message = {
@@ -20,8 +20,8 @@ class Producer(Communicator):
                 "msg": message
             }
         try:
-            async with websockets.connect(self.url) as websocket:
-                if not self.has_filter:
+            async with websockets.connect(self._url) as websocket:
+                if not self._has_filter:
                     await websocket.send(json.dumps(message))
                     print("Message sent to server.")
                 elif self.check_filter(message['msg']):
@@ -34,9 +34,9 @@ class Producer(Communicator):
                 print(f"Server response: {response}")
                 return response
         except Exception as e:
-            print(f"WebSocket connection failed: {e}")
+            raise Exception(f"WebSocket connection failed: {e}")
         
-    async def run_http(url, topic, message):
+    async def run_http(self, topic, message):
         payload = {
             "topic": topic,
             "msg": message
@@ -46,7 +46,7 @@ class Producer(Communicator):
         }
 
         async with httpx.AsyncClient() as client:
-            response = await client.post(url, json=payload, headers=headers)
+            response = await client.post(self._url, json=payload, headers=headers)
 
             if response.status_code != 200:
                 raise Exception(f"Network response was not ok: {response.status_code}, {response.text}")

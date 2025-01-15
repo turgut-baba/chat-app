@@ -22,6 +22,7 @@ async def serve_index():
 async def test_endpoint():
     producer = Producer("ws://localhost:8000/interviewmq")
     response = await producer.publish("foo", "Hello Stryker!")
+    print(response)
     return {"message": response}
 
 if __name__ == "__main__":

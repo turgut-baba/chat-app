@@ -4,7 +4,8 @@
     </head>
     <body>
         <h1> Example microservice to connect to InterviewMQ. Of course you can also create your own file with InterviewLIB and connect to it.</h1>
-
+        <p> The Javascript button sends a message to the message queue from javascript code (app.js) to the http endpoint directly.
+             The backend button sends an http request to the backend of this microservice which then uses the Producer class of the library that calls for the message queue with a websocket. </p>
         <button id="socket" class="rainbow-btn">
             <span>Send via Javascript</span>
         </button>    

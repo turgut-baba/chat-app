@@ -17,13 +17,13 @@ class Message(BaseModel):
 class ConnectionManager:
     def __init__(self):
         self.websocket_connections = defaultdict(lambda: [])
-        self.sse_queues: List[asyncio.Queue] = []
+        self.sse_queues = defaultdict(lambda: [])
 
-    async def add_sse_connection(self, queue: asyncio.Queue):
-        self.sse_queues.append(queue)
+    async def add_sse_connection(self, topic: str, queue: asyncio.Queue):
+        self.sse_queues[topic].append(queue)
 
-    async def remove_sse_connection(self, queue: asyncio.Queue):
-        self.sse_queues.remove(queue)
+    async def remove_sse_connection(self, topic: str, queue: asyncio.Queue):
+        self.sse_queues[topic].remove(queue)
 
     async def add_websocket_connection(self, topic: str, websocket: WebSocket):
         self.websocket_connections[topic].append(websocket)
@@ -40,5 +40,5 @@ class ConnectionManager:
                 await self.remove_websocket_connection(websocket)
 
         # Send message to SSE clients
-        for queue in self.sse_queues:
+        for queue in self.sse_queues[topic]:
             await queue.put(message)

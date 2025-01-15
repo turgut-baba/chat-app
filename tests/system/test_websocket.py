@@ -1,7 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 from fastapi.websockets import WebSocketDisconnect
-from main import app  # Replace with the actual module where your FastAPI app is defined
+from InterviewMQ.system.websocket import *
+from InterviewMQ import app
 import json
 # WebSocket test client
 client = TestClient(app)

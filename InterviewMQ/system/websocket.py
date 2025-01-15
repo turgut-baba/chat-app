@@ -1,6 +1,7 @@
 from fastapi import Request, HTTPException, WebSocket
 from pydantic import BaseModel
 from InterviewMQ.util.logger import Logger
+from InterviewMQ.util.status import Status
 import asyncio
 from InterviewMQ.Queue import connected_clients, topics, router
 
@@ -28,13 +29,8 @@ async def websocket_endpoint(websocket: WebSocket):
 
                 elif message.get("command") == "publish":
                     await connected_clients.broadcast(message.get("topic"), message.get("msg"))
-
-                    """ all_subscribed = topics[message.get("topic")]
-                    for reciever in all_subscribed:
-                        msg = message.get("msg")
-                        await reciever.send_text(msg) """
                 
-                await websocket.send_text(f"Server response: Recieved message!")
+                await websocket.send_text(f"Success: {Status.SUCCESS.value}")
             except asyncio.TimeoutError:
                 connected_clients.remove(message['topic'], websocket)
                 logger.log(f"Timeout, closing connection with {client_address}")

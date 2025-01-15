@@ -23,8 +23,6 @@ document.getElementById('socket').addEventListener('click', async () => {
     }
 });
 
-
-
 document.getElementById('backend').addEventListener('click', async () => {
     fetch('/send_backend')
     .then(response => {

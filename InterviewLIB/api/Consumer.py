@@ -11,24 +11,21 @@ class Consumer(Communicator):
     def __init__(self, url):
         super().__init__(url)
 
-
     async def subscribe(self, topic):
         """Start the WebSocket client."""
         await self.run(topic)
 
     async def run_http(self, topic):
-        url = "http://localhost:8000/interviewmq/subscribe"
-
         payload = {
-            "topic": "foo",
+            "topic": topic,
         }
         headers = {
             "Content-Type": "application/json"
         }
 
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(timeout=None) as client:
             try:
-                async with client.stream("POST", url, json=payload, headers=headers) as response:
+                async with client.stream("POST", self._url, json=payload, headers=headers) as response:
                     if response.status_code != 200:
                         print(f"Failed to subscribe: {response.status_code}")
                         return
@@ -44,49 +41,45 @@ class Consumer(Communicator):
                         except Exception as e:
                             print(f"Inner error: {e}")
             except Exception as e:
-                print(f"Error occurred: {e}")
+                raise Exception(f"Error occurred: {e}")
 
 
     async def run_ws(self, topic):
-        """Connect to the WebSocket and listen for messages."""
         try:
-            async with websockets.connect(self.url) as websocket:
-                self.websocket = websocket
+            async with websockets.connect(self._url) as websocket:
+                self._websocket = websocket
 
-                # Subscribe to the topic
                 """Subscribe to a topic."""
-                if not self.websocket:
+                if not self._websocket:
                     raise RuntimeError("WebSocket connection is not established. Call 'run' first.")
 
                 subscription = {
                     "command": "subscribe",
                     "topic": topic
                 }
-                await self.websocket.send(json.dumps(subscription))
+                await self._websocket.send(json.dumps(subscription))
                 print(f"Sent: {subscription}")
 
                 # Wait for subscription confirmation
-                response = await self.websocket.recv()
+                response = await self._websocket.recv()
                 print(f"Server Response: {response}")
 
-                # Listen for messages
+                # Listen for messages on the subscribed topic
                 while True:
                     try:
-                        data = await websocket.recv()
+                        data = await self._websocket.recv()
 
-                        if not self.has_filter:
-                            print(data)
+                        if not self._has_filter:
+                            print(data) # The end result, we simply print it as there is no front-end for this.
                         elif self.check_filter(data):
                             print(data)
-                        else:
-                            continue
-                            
-                    except asyncio.TimeoutError:
-                        print("Timeout: No message received within 30 seconds.")
-                        break
+                        
                     except json.JSONDecodeError:
                         print("Invalid JSON received.")
-                        break
         except Exception as e:
-            print(f"Error: {e}")
-
+            if "1012" in str(e):
+                print("Received 1012 error, performing service restart.")
+                await self.restart_service()
+                await self.run_ws(topic)
+            else: 
+                raise Exception(f"There has been an error in websocket consumer: {e}")

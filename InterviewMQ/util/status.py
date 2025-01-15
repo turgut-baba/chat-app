@@ -1,8 +1,8 @@
 from enum import Enum
 
 class Status(Enum):
-    SUCCESS = 1
-    IDLE = 2
-    WARNING = 3
-    FAIL = 4
-    CRITICAL = 5
+    SUCCESS = 100
+    IDLE = 200
+    WARNING = 300
+    FAIL = 400
+    CRITICAL = 500
