@@ -31,14 +31,23 @@ class ConnectionManager:
     async def remove_websocket_connection(self, topic:str, websocket: WebSocket):
         self.websocket_connections[topic].remove(websocket)
 
+    async def clear(self):
+        self.websocket_connections.clear()
+        self.sse_queues.clear()
+
     async def broadcast(self, topic: str, message: str):
         # Send message to WebSocket clients
         for websocket in self.websocket_connections[topic]:
             try:
                 await websocket.send_text(message)
             except Exception:
-                await self.remove_websocket_connection(websocket)
+                await self.remove_websocket_connection(topic, websocket)
 
         # Send message to SSE clients
         for queue in self.sse_queues[topic]:
-            await queue.put(message)
+            try:
+                await queue.put(message)
+            except Exception:
+                await self.remove_sse_connection(topic, websocket)
+
+            

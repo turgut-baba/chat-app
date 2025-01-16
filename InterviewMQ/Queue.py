@@ -1,12 +1,10 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 import asyncio
 from typing import List
-from InterviewMQ.util.logger import Logger
 from InterviewMQ.system.message import ConnectionManager
 from collections import defaultdict
 
 topics = defaultdict(lambda: [])
-logger = Logger("server.log", "InterviewMQ")
 
 connected_clients = ConnectionManager()
 

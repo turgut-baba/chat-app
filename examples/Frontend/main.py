@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 import os
 from fastapi.staticfiles import StaticFiles
-from InterviewLIB.api.Producer import Producer
+from InterviewLIB.api import Producer, ConnectionMethod
 
 app = FastAPI()
 
@@ -21,8 +21,8 @@ async def serve_index():
 @app.get("/send_backend")
 async def test_endpoint():
     producer = Producer("ws://localhost:8000/interviewmq")
+    producer.set_connection(ConnectionMethod.WS)
     response = await producer.publish("foo", "Hello Stryker!")
-    print(response)
     return {"message": response}
 
 if __name__ == "__main__":

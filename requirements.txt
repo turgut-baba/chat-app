@@ -6,4 +6,7 @@ uvicorn
 
 pytest
 pytest-asyncio 
+pytest-mock
+pytest-timeout
+
 httpx

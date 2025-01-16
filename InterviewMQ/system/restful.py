@@ -34,7 +34,8 @@ async def publish(message: Message, request: Request):
     """
     topic = message.topic
     msg = message.msg
-    if not msg:
+    
+    if not msg or not topic:
         raise HTTPException(status_code=400, detail="Message content is required")
 
     await connected_clients.broadcast(topic, msg)

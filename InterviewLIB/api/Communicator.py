@@ -12,7 +12,7 @@ class Communicator:
         self._has_filter = False
         self._retries = 3
 
-    def set_filter(self, filter: Union[str, Callable]):
+    def set_filter(self, filter: Union[str, Callable]) -> None:
 
         """ Can either set custom filter function or a simple string to filter for."""
 
@@ -47,7 +47,7 @@ class Communicator:
         elif isinstance(self.filter, Callable):
             return self.filter(message)
 
-    def set_connection(self, Connection):
+    def set_connection(self, Connection: ConnectionMethod):
         self._method = Connection
 
     async def run(self, *topic):

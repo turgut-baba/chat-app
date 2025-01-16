@@ -1,16 +1,13 @@
 from InterviewLIB.api import Consumer, ConnectionMethod
 import asyncio
-from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
-client = Consumer("http://localhost:8000/interviewmq/subscribe")
+client = Consumer("http://localhost:8000/interviewmq")
 client.set_filter("Hello")
 client.set_connection(ConnectionMethod.HTTP)
 asyncio.run(client.subscribe("foo") )
-
 
 
 if __name__ == "__main__":

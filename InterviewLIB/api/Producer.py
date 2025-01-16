@@ -1,9 +1,6 @@
-import asyncio
 import websockets
 import json
-import requests
 import httpx
-from typing import Callable, Union
 from .Communicator import Communicator
 
 class Producer(Communicator):

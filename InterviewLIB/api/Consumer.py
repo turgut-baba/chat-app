@@ -1,9 +1,6 @@
-from typing import Callable, Union
 import websockets
-import asyncio
 import json
 import httpx
-from .Settings import ConnectionMethod
 from .Communicator import Communicator
 
 class Consumer(Communicator):
@@ -19,13 +16,14 @@ class Consumer(Communicator):
         payload = {
             "topic": topic,
         }
+
         headers = {
             "Content-Type": "application/json"
         }
 
         async with httpx.AsyncClient(timeout=None) as client:
             try:
-                async with client.stream("POST", self._url, json=payload, headers=headers) as response:
+                async with client.stream("POST", self._url + "/subscribe", json=payload, headers=headers) as response:
                     if response.status_code != 200:
                         print(f"Failed to subscribe: {response.status_code}")
                         return

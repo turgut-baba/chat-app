@@ -16,6 +16,8 @@ An optional abstraction library caleld InterviewLIB that helps you write consume
 
 ## Installation
 
+Before installing individual parts (which is not needed since setup will guide you through it) be sure to run setup_and_run.py since it installs each requirement. To install each component without setup_and_run, simply install requirements.txt using 'pip install -r requirements.txt'
+
 To install InterviewLIB, you can directly use it's source code or use pip like so:
 
 ```bash
@@ -36,12 +38,25 @@ python -c "import InterviewLIB; print('InterviewLIB installed successfully!')"
 ## Basic Usage
 
 For running the examples with minimal effort, simply run setup_and_run.py like so:
+
 ```bash
 python setup_and_run.py
 ```
 
 Simply follow the instructions after running and this will run the InterviewMQ server 
 and run the publisher and consumer clients inside examples.
+
+To run it manually, go to the projects root directory and create 3 seperate terminals then run these 3 commands in seperate terminals:
+
+```bash
+python -m InterviewMQ
+```
+```bash
+python ./examples/Backend/main.py
+```
+```bash
+python ./examples/Frontend/main.py
+```
 
 ### InterviewMQ
 
@@ -51,13 +66,46 @@ Here is how to run InterviewMQ:
 python -m InterviewMQ
 ```
 
-This will run on a localhost on port 8000.
+This will run on a localhost on port 8000. Or you can give an additional argument to set a different port like so:
 
-or 
+ ```bash
+python -m InterviewMQ 8080
+```
+
+or you can use uvicorn
 
 ```bash
 uvicorn InterviewMQ.Queue:app --host 0.0.0.0 --port 8000 --reload
 ```
+
+or docker
+
+```bash
+docker build -t interview-mq-image .
+docker run -d -p 8000:8000 --name interviewmq-instance interview-mq-image
+```
+
+Thats all, now InterviewMQ is working and you can access it by sending json to it's endpoints. For more information refer to documentations.
+
+
+Of course you can manually connect to the message queue without the help of InterviewLIB with the port and the uri manually. If you do so, the json you send must look like this:
+
+```json
+subscription = {
+            "command": "subscribe",
+            "topic": "your_topic"
+        }
+```
+
+And for the manual connection for a publisher the json should look like this:
+```json
+message = {
+        "command": "publish",
+        "topic": "your_topic",
+        "msg": "your_message"
+    }
+```
+
 
 ### InterviewLIB
 
@@ -78,16 +126,6 @@ asyncio.run(client.subscribe("foo"))
 client.start_listening()
 ```
 
-Ofcourse you can manually connect to the message queue with the port and the uri manually.
-If you do so, the json you send must look like this:
-
-```json
-subscription = {
-            "command": "subscribe",
-            "topic": "your_topic"
-        }
-```
-
 Similarly there is an interface for publisher class too Here is what an app looks like with the Publisher class:
 
 ```python
@@ -97,22 +135,13 @@ client = ProducerImpl("ws://localhost:8000/interviewmq")
 client.publish("foo", "Test message is sent!")
 ```
 
-And for the manual connection for a publisher the json should look like this:
-```json
-message = {
-        "command": "publish",
-        "topic": "your_topic",
-        "msg": "your_message"
-    }
-```
-
-For detailed API documentation, refer to the [official documentation](#further-reading).
+There is also an option to send http request instead of websocket, a message filtering functionality and a retry mechanism. For more information about those functionalities and detailed API documentation, refer to the [official documentation](#further-reading).
 
 ---
 
 ## Features Overview
 
-InterviewMQ provides the following key features:
+InterviewLIB provides the following key features:
 
 - **Publish:** Publish a message to the message queue so every microservice subscribed to that message can recieve that message asyncronously.
 - **Subscribe:** Subscribe to the server on a given topic so that if or when a publisher publishes a message in that topic recieve the message.
