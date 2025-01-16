@@ -1,7 +1,7 @@
 from queue import Queue
 from typing import Callable
 from pydantic import BaseModel
-from util.status import Status
+from InterviewMQ.util.status import Status
 from fastapi import WebSocket
 from typing import List
 import asyncio
