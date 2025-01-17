@@ -27,7 +27,7 @@ async def subscribe(message: Message, request: Request):
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 
-@router.post("/interviewmq/publish/")
+@router.post("/interviewmq/publish")
 async def publish(message: Message, request: Request):
     """
     Publish a message to all connected subscribers.

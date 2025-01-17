@@ -2,7 +2,7 @@ As a C++ developer, some habits may have transferred over to my Python coding sk
 
 On an important note, even though I've written in Python a lot throughout the years, 
 some aspects of the challenge were fairly new to me, as I'm mainly a C++ developer. 
-However, as a self-taught developer, my most cunning skill is learning new technologies 
+However, as a self-taught developer, my most effective skill is learning new technologies 
 with ease thanks to my curiosity. I believe I did a great job with what I've searched.
 
 I tried to be as modular and scalable as possible, as I usually do. Some aspects,
@@ -16,22 +16,39 @@ After that, I wanted to do some research that might be useful for me. With a sim
  prompt, I discovered RabbitMQ and Celery, both of which were open-source, so I read those 
  repositories. Of course, it wasn't enough, so I searched the internet more on the topic. 
  
- After that, I was left with two options: integrate something similar to the aforementioned 
- frameworks or create something unique with those foundations. I followed my own path and 
- did a little bit of both, implementing what I thought was integral to a system like this 
- and adding my own creative features after building a solid foundation.
-
-Next, I added what I thought would be essential classes. Of course, some things are 
-subject to change as there are no architectural designs for me to follow, 
-so I just started coding whatever and tweaking it as I went.
+ After that, I was left with two options: Create a library built around RabbitMQ and abstract it,
+ or write an entire new message queue. I went with the ladder. I created a total of 3 services,
+ Producer, Consumer and InterviewMQ. I decided to do that because I simply liked the challange of
+ building my own message queue, as a plus it helped me understand it more so I can develop better.
 
 My next main objective is to implement the client microservices to better understand
  what I'm going to do. I believe going step by step from such an example will amplify 
  my vision on the task.
 
 So, after looking at some RabbitMQ examples and having a little chat with ChatGPT, 
-I created two examples, ServiceA and ServiceB (creative names, I know).
-Since I've developed some websites before, creating ServiceB, which receives messages 
+I created two examples, I decied to add a frontend for a better usage.
+Since I've developed some websites before, creating Frontend aka the producer, which receives messages 
 and processes them like a front-end would, was more comfortable within my skill range.
 So, I decided to add the websocket to that and focus more on it to aid my development 
 steps.
+
+After that I added http which was more challanging since there needed to be an active open connection,
+but I found my way around.
+
+Overall I didn't add many functionalities that came into my mind because I didn't want to over do
+the assignemnt task, there is no need to re-invent the wheel after all. But there can deffinitely be more
+stuff added like more checks and exceptions, a custom logger whcih I started but scrapped later on,
+a read recipt and many more came to my mind during development.
+
+The hardest part for me was the unit testing. This repository is more suited to integration testing
+than unit testing as I cannot propperly mock anything and the open connection kept the terminal frozen
+when running consumer tests no matter what I did. I believe given more time I would have done better
+tests but this is the bare minimum for now. 
+
+I kept getting this error when doing mocks: `AttributeError: __aenter__`
+which there are some posts on the internet but I couldn't seem to fix it given my situation and
+chatgpt was no help either. I think it's about the compability of my used libraries.
+
+I think this was a really fun interview challange and I quite enjoyed doing it :)
+
+Thank you for your time for reading all of this, I hope you have a wonderfull day.

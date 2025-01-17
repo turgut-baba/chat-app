@@ -1,10 +1,18 @@
 import os
 import sys
-import platform
 import subprocess
+
+should_install = input("Should requirements be installed? ('Yes' or 'No'): ")
+
+if should_install == "Yes":
+    subprocess.run([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"], check=True)
+
+import platform
 import docker 
 import time
 import signal
+
+import docker.errors
 
 OPEN_TERMINALS = []
 
@@ -89,7 +97,12 @@ def run_docker():
         print("Please install docker first and re-run the script. Download using sudo on linux or install and setup docker desktop for windows.")
         quit()
 
-    client = docker.from_env()
+    try:
+        client = docker.from_env()
+    except docker.errors.DockerException:
+        print("Please make sure docker is running.")
+        quit()
+        
     image_name = "interview-mq-image"
     container_name = "interviewmq-instance"
     port_mapping = {'8000/tcp': 8000}
@@ -131,49 +144,45 @@ def linux_setup(option) -> dict:
 def windows_setup(option):
     machine = option["machine preferance"]
     services = option["server preferance"]
-    if machine == 1:
-        if services == 1:
+    
+    if services == 1:
+        if machine == 1:
             server_port = get_port(
-                "A new terminal will be opened to run InterviewMQ, enter a port you wish to run or press enter for default 8000: ",
-                8000
-                )
+            "A new terminal will be opened to run InterviewMQ, enter a port you wish to run or press enter for default 8000: ",
+            8000
+            )
             command = "uvicorn InterviewMQ:app --host 0.0.0.0 --port " + str(server_port) + " --reload"
             message_queue = subprocess.Popen(["start", "cmd", "/c", command], shell=True)
             OPEN_TERMINALS.append(message_queue)
             time.sleep(1) 
+        elif machine == 2:
+            server_port = 8000
+            run_docker()
 
-            port = get_port(
-                "A new terminal will be opened to run frontend, enter a port you wish to run or press enter for default 8080: ",
-                8080
-                )
-            terminal = subprocess.Popen(["start", "cmd", "/c", "python ./examples/Frontend/main.py", str(port), str(server_port)], shell=True)
-            OPEN_TERMINALS.append(terminal)
+        port = get_port(
+            "A new terminal will be opened to run frontend, enter a port you wish to run or press enter for default 8080: ",
+            8080
+            )
+        terminal = subprocess.Popen(["start", "cmd", "/c", "python ./examples/Frontend/main.py", str(port), str(server_port)], shell=True)
+        OPEN_TERMINALS.append(terminal)
 
-            time.sleep(1)
+        time.sleep(1)
 
-            input("Lastly backend will run on this terminal, open localhost on your browser to publish a message here, press enter to run backend.")
-            print(f"You can visit http://localhost:{port} to view the frontent.")
-            subprocess.run(["python", "./examples/Backend/main.py", str(server_port)])
-        elif services == 1:
-            server_port = get_port(
-                "Enter a port you wish to run or press enter for default 8000: ",
-                8000
-                )
-            command = "uvicorn InterviewMQ:app --host 0.0.0.0 --port " + str(server_port) + " --reload"
-            subprocess.Popen(["start", "cmd", "/c", command], shell=True)
-
-    elif machine == 2:
-        run_docker()
+        input("Lastly backend will run on this terminal, open localhost on your browser to publish a message here, press enter to run backend.")
+        print(f"You can visit http://localhost:{port} to view the frontent.")
+        subprocess.run(["python", "./examples/Backend/main.py", str(server_port)])
+    elif services == 1:
+        server_port = get_port(
+            "Enter a port you wish to run or press enter for default 8000: ",
+            8000
+            )
+        command = "uvicorn InterviewMQ:app --host 0.0.0.0 --port " + str(server_port) + " --reload"
+        subprocess.Popen(["start", "cmd", "/c", command], shell=True)
     
 
 if __name__ == "__main__":
     os_name = platform.system()
     option = get_options()
-
-    should_install = input("Should requirements be installed? ('Yes' or 'No')")
-    
-    if should_install == "Yes":
-        subprocess.run([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"], check=True)
 
     if os_name == "Windows":
         windows_setup(option)

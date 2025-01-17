@@ -43,7 +43,7 @@ class Producer(Communicator):
         }
 
         async with httpx.AsyncClient() as client:
-            response = await client.post(self._url, json=payload, headers=headers)
+            response = await client.post(self._url + "/publish", json=payload, headers=headers)
 
             if response.status_code != 200:
                 raise Exception(f"Network response was not ok: {response.status_code}, {response.text}")
