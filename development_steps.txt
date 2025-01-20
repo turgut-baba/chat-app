@@ -49,6 +49,13 @@ I kept getting this error when doing mocks: `AttributeError: __aenter__`
 which there are some posts on the internet but I couldn't seem to fix it given my situation and
 chatgpt was no help either. I think it's about the compability of my used libraries.
 
+
+Normally my next step would be to ask a question on stackoverflow before re-imaginig the situation at hand.
+If I find some time I would ask a question on stackoverflow and if that doesn't yeild any
+answers I will try to approach the situation differently than I do now like trying
+a different test framework.
+
+
 I think this was a really fun interview challange and I quite enjoyed doing it :)
 
 Thank you for your time for reading all of this, I hope you have a wonderfull day.

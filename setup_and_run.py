@@ -187,9 +187,9 @@ if __name__ == "__main__":
     if os_name == "Windows":
         windows_setup(option)
     elif os_name == "Linux":
-        linux_setup(option)
+        print("Linux is not supported at the moment, we highy reccomend to run on windows")
     else:
-        print("This platform is not supported. Please select either linux or windows or manualy setup.")
+        print("This platform is not supported. Please select either windows or manualy setup.")
 
     for terminal in OPEN_TERMINALS:
         try:
